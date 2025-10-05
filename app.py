@@ -143,16 +143,25 @@ HTML_TEMPLATE = """
     <title>Exogen - {{ title }}</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        .dropdown-content { display: none; position: absolute; background-color: #1F2937; min-width: 160px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); z-index: 1; border-radius: 0.5rem; }
+        /* ---  COLOR PALETTE --- */
+        /* Deep Blue: #07173F      */
+        /* Electric Blue: #0042A6  */
+        /* Blue Yonder: #2E96F5    */
+        /* Rocket Red: #E43700     */
+        /* Martian Red: #8E1100    */
+        /* Neon Yellow: #EAFE07    */
+        /* White: #FFFFFF          */
+        
+        .dropdown-content { display: none; position: absolute; background-color: #07173f; min-width: 160px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); z-index: 1; border-radius: 0.5rem; }
         .dropdown:hover .dropdown-content { display: block; }
         body { font-family: 'Inter', sans-serif; }
         .alert { padding: 1rem; margin-bottom: 1rem; border-radius: 0.5rem; }
-        .alert-success { background-color: #059669; color: #D1FAE5; }
-        .alert-error { background-color: #B91C1C; color: #FEE2E2; }
+        .alert-success { background-color: #059669; color: #D1FAE5; } /* Kept green for standard success feedback */
+        .alert-error { background-color: #8E1100; color: #fee2e2; } /* Martian Red for errors */
     </style>
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
 </head>
-<body class="bg-gray-900 text-white">
+<body class="bg-[#07173F] text-white">
     <div class="container mx-auto p-4">
         <header class="flex justify-between items-center mb-8">
             <div class="dropdown relative">
@@ -161,10 +170,11 @@ HTML_TEMPLATE = """
                     <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                 </button>
                 <div class="dropdown-content pt-4 pb-2">
-                    <a href="{{ url_for('home') }}" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-white">Home</a>
-                    <a href="{{ url_for('about') }}" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-white">About</a>
-                    <a href="{{ url_for('data') }}" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-white">Data & Insights</a>
-                    <a href="{{ url_for('predict_csv') }}" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-white">Predict from CSV</a>
+                    <a href="{{ url_for('home') }}" class="block px-4 py-2 text-sm text-gray-300 hover:bg-[#0042A6] hover:text-white">Home</a>
+                    <a href="{{ url_for('about') }}" class="block px-4 py-2 text-sm text-gray-300 hover:bg-[#0042A6] hover:text-white">About</a>
+                    <a href="{{ url_for('data') }}" class="block px-4 py-2 text-sm text-gray-300 hover:bg-[#0042A6] hover:text-white">Data & Insights</a>
+                    <a href="{{ url_for('predict_csv') }}" class="block px-4 py-2 text-sm text-gray-300 hover:bg-[#0042A6] hover:text-white">Predict from CSV</a>
+                    <a href="{{ url_for('roadmap') }}" class="block px-4 py-2 text-sm text-gray-300 hover:bg-[#0042A6] hover:text-white">Roadmap</a>
                 </div>
             </div>
         </header>
@@ -179,26 +189,26 @@ HTML_TEMPLATE = """
 
             {% if page == 'home' %}
             <div class="flex justify-center mb-8">
-                <img src="{{ url_for('static', filename='spaceappslogo.png') }}" alt="Exoplanet Illustration" class="w-52 h-52 rounded-full object-cover shadow-2xl border-4 border-gray-700">
+                <img src="{{ url_for('static', filename='spaceappslogo.png') }}" alt="Exoplanet Illustration" class="w-52 h-52 rounded-full object-cover shadow-2xl">
             </div>
-            <div class="bg-gray-800 p-8 rounded-lg shadow-2xl max-w-2xl mx-auto">
+            <div class="bg-[#0042A6] p-8 rounded-lg shadow-2xl max-w-2xl mx-auto">
                 <h1 class="text-2xl font-semibold mb-2">Kepler Object of Interest (KOI) Predictor</h1>
-                <p class="text-gray-400 mb-6">Enter a Kepler ID (e.g., K00752.01) to get the official classification and a prediction from our Random Forest model.</p>
+                <p class="text-gray-300 mb-6">Enter a Kepler ID (e.g., K00752.01) to get the official classification and a prediction from our Random Forest model.</p>
                 <form action="{{ url_for('home') }}" method="post">
                     <div class="flex flex-col sm:flex-row gap-4">
-                        <input type="text" name="kepler_id" placeholder="Enter Kepler ID" class="flex-grow bg-gray-700 text-white border border-gray-600 rounded-md py-2 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500" required>
-                        <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-md transition duration-300">Analyze</button>
+                        <input type="text" name="kepler_id" placeholder="Enter Kepler ID" class="flex-grow bg-[#07173F] text-white border border-gray-600 rounded-md py-2 px-4 focus:outline-none focus:ring-2 focus:ring-[#2E96F5]" required>
+                        <button type="submit" class="bg-[#E43700] hover:bg-[#8E1100] text-white font-bold py-2 px-6 rounded-md transition duration-300">Analyze</button>
                     </div>
                 </form>
                 {{ result_html | safe }}
             </div>
             
             {% elif page == 'about' %}
-            <div class="bg-gray-800 p-8 rounded-lg shadow-2xl max-w-4xl mx-auto text-gray-300">
+            <div class="bg-[#0042A6] p-8 rounded-lg shadow-2xl max-w-4xl mx-auto text-gray-300">
                 <h1 class="text-3xl font-bold mb-4 text-white">About Exogen</h1>
                 <p class="mb-4">Exogen is a web application designed to predict the status of Kepler Objects of Interest (KOIs) using machine learning. It leverages data from the NASA Exoplanet Archive to train a Random Forest classifier, a powerful model capable of identifying complex patterns in data.</p>
                 <h2 class="text-2xl font-semibold mb-2 text-white">The Mission</h2>
-                <p class="mb-4">The goal of this project is to provide a simple, interactive tool for exploring the likelihood of a KOI being a confirmed exoplanet, a candidate, or a false positive. By inputting a Kepler ID, users can instantly see both the official NASA classification and a prediction generated by our custom-trained model.</p>
+                <p class="mb-4">The goal of this project is to provide a simple, interactive tool for exploring the likelihood of a KOI being a confirmed exoplanet, a candidate, or a false positive. You can either input a Kepler Id or upload a CSV file containing multiple bodies with the required features for our model.</p>
                 <h2 class="text-2xl font-semibold mb-2 text-white">The Technology</h2>
                 <ul class="list-disc list-inside space-y-2">
                     <li><strong>Backend:</strong> The application is powered by Python and the Flask micro web framework.</li>
@@ -208,12 +218,12 @@ HTML_TEMPLATE = """
             </div>
             
             {% elif page == 'data' %}
-            <div class="bg-gray-800 p-8 rounded-lg shadow-2xl max-w-6xl mx-auto text-gray-300">
+            <div class="bg-[#0042A6] p-8 rounded-lg shadow-2xl max-w-6xl mx-auto text-gray-300">
                 <h1 class="text-3xl font-bold mb-4 text-white">Model Performance & Insights</h1>
-                <p class="mb-8">This page visualizes the performance of our trained Random Forest model. The model was trained on 80% of the preprocessed Kepler dataset and evaluated on the remaining 20%.</p>
+                <p class="mb-8">This page visualizes the performance of my trained Random Forest model. The model was trained on 80% of the preprocessed Kepler dataset and evaluated on the remaining 20%.</p>
                 <div class="text-center mb-10">
                     <h2 class="text-lg font-semibold text-gray-400 uppercase">Model Accuracy</h2>
-                    <p class="text-6xl font-bold text-green-400 mt-2">{{ accuracy_text }}</p>
+                    <p class="text-6xl font-bold text-[#EAFE07] mt-2">{{ accuracy_text }}</p>
                 </div>
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                     <div>
@@ -222,7 +232,7 @@ HTML_TEMPLATE = """
                         {% if cm_img %}
                             <img src="data:image/png;base64,{{ cm_img }}" alt="Confusion Matrix" class="rounded-lg shadow-lg">
                         {% else %}
-                            <div class="p-4 rounded-md bg-yellow-900/50 border border-yellow-700 text-yellow-300"><strong>Image not available.</strong><br>Please delete the <code>exoplanet_model.joblib</code> file and restart the app to generate the charts.</div>
+                            <div class="p-4 rounded-md bg-[#8E1100]/50 border border-[#8E1100] text-yellow-300"><strong>Image not available.</strong><br>Please delete the <code>exoplanet_model.joblib</code> file and restart the app to generate the charts.</div>
                         {% endif %}
                     </div>
                     <div>
@@ -231,42 +241,68 @@ HTML_TEMPLATE = """
                         {% if fi_img %}
                             <img src="data:image/png;base64,{{ fi_img }}" alt="Feature Importance" class="rounded-lg shadow-lg">
                         {% else %}
-                            <div class="p-4 rounded-md bg-yellow-900/50 border border-yellow-700 text-yellow-300"><strong>Image not available.</strong><br>Please delete the <code>exoplanet_model.joblib</code> file and restart the app to generate the charts.</div>
+                            <div class="p-4 rounded-md bg-[#8E1100]/50 border border-[#8E1100] text-yellow-300"><strong>Image not available.</strong><br>Please delete the <code>exoplanet_model.joblib</code> file and restart the app to generate the charts.</div>
                         {% endif %}
+                    </div>
+                </div>
+            </div>
+            
+            {% elif page == 'roadmap' %}
+            <div class="bg-[#0042A6] p-8 rounded-lg shadow-2xl max-w-4xl mx-auto text-gray-300">
+                <h1 class="text-3xl font-bold mb-4 text-white">Project Roadmap 🚀</h1>
+                <p class="mb-8">If I had any more time, here are the features I would love to add to make Exogen an even more powerful tool and i hope you see its potential.</p>
+                
+                <div class="space-y-6">
+                    <!-- Feature 1 -->
+                    <div class="bg-[#07173F]/50 p-6 rounded-lg">
+                        <h2 class="text-2xl font-semibold mb-2 text-white">Intelligent CSV Uploads</h2>
+                        <p>Currently, the user's CSV file must have exact column names. I would implement a more flexible system that uses string manipulation and pattern matching to intelligently map the user's column names (e.g., "Planet Radius" or "koi_prad") to the features our model requires. This would make the tool much more user-friendly.</p>
+                    </div>
+
+                    <!-- Feature 2 -->
+                    <div class="bg-[#07173F]/50 p-6 rounded-lg">
+                        <h2 class="text-2xl font-semibold mb-2 text-white">Expanded Mission Support (TESS & K2)</h2>
+                        <p>My current model is trained exclusively on Kepler data. The next step would be to incorporate the TESS and K2 data. Training the model on this diverse data would make Exogen a more universal and robust classification tool.</p>
+                    </div>
+
+                    <!-- Feature 3 -->
+                    <div class="bg-[#07173F]/50 p-6 rounded-lg">
+                        <h2 class="text-2xl font-semibold mb-2 text-white">Direct Light Curve Analysis</h2>
+                        <p>The ultimate goal is to move beyond pre-processed CSV files. I hope to use a library like <code class="bg-gray-700 p-1 rounded text-sm">lightkurve</code> to fetch the raw photometric data, process the light curve, extract features, and make a prediction in real-time. This would transform the tool from a data-checker into a true end-to-end analysis platform.</p>
                     </div>
                 </div>
             </div>
 
             {% elif page == 'predict_csv' %}
-            <div class="bg-gray-800 p-8 rounded-lg shadow-2xl max-w-2xl mx-auto">
+            <div class="bg-[#0042A6] p-8 rounded-lg shadow-2xl max-w-2xl mx-auto">
                 <h1 class="text-2xl font-semibold mb-2">Predict from CSV</h1>
-                <p class="text-gray-400 mb-6">Upload a CSV file with the same features as the Kepler dataset to get a prediction for each row using the pre-trained model.</p>
+                <p class="text-gray-300 mb-6">Upload a CSV file with the same features as the Kepler dataset to get a prediction for each row. Simply export your data from Excel and upload!</p>
                 <form action="{{ url_for('predict_csv') }}" method="post" enctype="multipart/form-data">
                     <div class="flex flex-col gap-4">
-                        <input type="file" name="file" class="block w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700" required>
-                        <button type="submit" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-6 rounded-md transition duration-300">Upload and Predict</button>
+                        <input type="file" name="file" class="block w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-[#EAFE07] file:text-black hover:file:bg-[#d4e006]" required>
+                        <button type="submit" class="bg-[#E43700] hover:bg-[#8E1100] text-white font-bold py-2 px-6 rounded-md transition duration-300">Upload and Predict</button>
                     </div>
                 </form>
             </div>
 
             {% elif page == 'results' %}
-            <div class="bg-gray-800 p-8 rounded-lg shadow-2xl max-w-7xl mx-auto">
+            <div class="bg-[#0042A6] p-8 rounded-lg shadow-2xl max-w-7xl mx-auto">
                 <h1 class="text-3xl font-bold mb-4 text-white">Prediction Results</h1>
-                <p class="text-gray-400 mb-6">Showing predictions for the uploaded file using the Kepler-trained model.</p>
+                <p class="text-gray-300 mb-6">Showing predictions for the uploaded file using the Kepler-trained model.</p>
                 <div class="overflow-x-auto">
                     <table class="min-w-full divide-y divide-gray-700">
-                        <thead class="bg-gray-700">
+                        <thead class="bg-[#07173F]">
                             <tr>
                                 {% for header in headers %}
                                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">{{ header | replace('_', ' ') }}</th>
                                 {% endfor %}
                             </tr>
                         </thead>
-                        <tbody class="bg-gray-800 divide-y divide-gray-700">
+                        <tbody class="bg-[#0042A6] divide-y divide-gray-700">
                             {% for row in results %}
                                 <tr>
                                     {% for header in headers %}
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm {% if header == 'Model Prediction' %}font-bold text-purple-400{% else %}text-gray-300{% endif %}">
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm {% if header == 'Model Prediction' %}font-bold text-[#E43700]{% else %}text-gray-300{% endif %}">
                                             {{ row[header] }}
                                         </td>
                                     {% endfor %}
@@ -302,16 +338,16 @@ def home():
             prediction_label = DISPOSITION_MAP.get(prediction_numeric, "UNKNOWN")
             
             result_html = render_template_string("""
-            <div class='mt-8 p-6 rounded-lg bg-gray-700/50 border border-gray-600'>
-                <h2 class='text-xl font-semibold mb-4'>Analysis for <span class='font-mono text-blue-400'>{{kepler_id}}</span></h2>
+            <div class='mt-8 p-6 rounded-lg bg-[#07173F]/50 border border-gray-600'>
+                <h2 class='text-xl font-semibold mb-4'>Analysis for <span class='font-mono text-[#2E96F5]'>{{kepler_id}}</span></h2>
                 <div class='grid grid-cols-1 md:grid-cols-2 gap-4 text-center'>
-                    <div class='bg-gray-800 p-4 rounded-md'><h3 class='text-sm font-bold text-gray-400'>OFFICIAL STATUS</h3><p class='text-2xl font-semibold text-green-400 mt-1'>{{official_status}}</p></div>
-                    <div class='bg-gray-800 p-4 rounded-md'><h3 class='text-sm font-bold text-gray-400'>MODEL PREDICTION</h3><p class='text-2xl font-semibold text-purple-400 mt-1'>{{prediction_label}}</p></div>
+                    <div class='bg-[#07173F] p-4 rounded-md'><h3 class='text-sm font-bold text-gray-400'>OFFICIAL STATUS</h3><p class='text-2xl font-semibold text-[#EAFE07] mt-1'>{{official_status}}</p></div>
+                    <div class='bg-[#07173F] p-4 rounded-md'><h3 class='text-sm font-bold text-gray-400'>MODEL PREDICTION</h3><p class='text-2xl font-semibold text-[#E43700] mt-1'>{{prediction_label}}</p></div>
                 </div>
             </div>""", kepler_id=kepler_id, official_status=official_status, prediction_label=prediction_label)
         else:
             result_html = render_template_string("""
-            <div class='mt-8 p-4 rounded-md bg-red-900/50 border border-red-700'>
+            <div class='mt-8 p-4 rounded-md bg-[#8E1100]/50 border border-[#8E1100]'>
                 <h3 class='font-bold text-red-300'>Error</h3>
                 <p class='text-red-400'>Kepler ID <span class='font-mono'>{{kepler_id}}</span> not found in the dataset.</p>
             </div>""", kepler_id=kepler_id)
@@ -336,6 +372,10 @@ def data():
         fi_img=fi_img
     )
 
+@app.route('/roadmap')
+def roadmap():
+    return render_template_string(HTML_TEMPLATE, page='roadmap', title="Roadmap")
+
 @app.route('/predict_csv', methods=['GET', 'POST'])
 def predict_csv():
     if request.method == 'POST':
@@ -352,18 +392,30 @@ def predict_csv():
             return redirect(request.url)
 
         try:
-            upload_df = pd.read_csv(file)
+           
+            # Read the raw file content
+            content = file.read().decode('utf-8-sig') # Use utf-8-sig to handle potential BOM
+
+            # Strip leading/trailing quotes from each line and join them back together ucz excel adds them quotes
+            cleaned_content = "\n".join([line.strip().strip('"') for line in content.splitlines()])
+
+            # Create a new in-memory file from the cleaned content
+            cleaned_file = io.StringIO(cleaned_content)
+            
+            # Read the cleaned file with the flexible separator
+            upload_df = pd.read_csv(cleaned_file, sep='[,;]', engine='python')
+            # ------------------------------------
+            
         except Exception as e:
-            flash(f"Error reading CSV file: {e}", 'error')
+            flash(f"Error reading or cleaning the CSV file: {e}", 'error')
             return redirect(request.url)
 
         # --- Feature Validation ---
         model_features = artifacts['features']
-        # Find which columns are missing
+        upload_df.columns = upload_df.columns.str.strip() # Clean column names
         missing_cols = [col for col in model_features if col not in upload_df.columns]
         
         if missing_cols:
-            # Create a more helpful error message
             error_message = "The uploaded CSV is missing required columns: <br><ul class='list-disc list-inside mt-2'>"
             for col in missing_cols:
                 error_message += f"<li>{col}</li>"
